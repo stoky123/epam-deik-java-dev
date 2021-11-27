@@ -28,7 +28,8 @@ public class AccountCommandHandler {
 
     @ShellMethod(value = "Sign out", key = "sign out")
     public String signOut() {
-        if (true /* Not signed in*/ ) {
+        // Not signed in
+        if (true) {
             return "You are not signed in.";
         }
         else {
@@ -38,10 +39,12 @@ public class AccountCommandHandler {
 
     @ShellMethod(value = "Describes the currently logged in account", key = "describe account")
     public String describeAccount() {
-        if (true /* Not signed in*/ ) {
+        // Not signed in
+        if (true) {
             return "You are not signed in.";
         }
-        else if (false /* Admin */ ) {
+        // Admin
+        else if (false) {
             return "Signed in with privileged account" + "'<felhasználónév>'";
         }
         else {
