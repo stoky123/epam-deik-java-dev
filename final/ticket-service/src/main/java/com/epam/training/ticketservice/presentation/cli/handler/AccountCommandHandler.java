@@ -6,6 +6,16 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class AccountCommandHandler {
 
+    @ShellMethod(value = "Sign in", key = "sign in")
+    public String signIn(final String adminUserName, final String adminPassword) {
+        if (true) {
+            return "Successfully signed in.";
+        }
+        else {
+            return "Login failed due to incorrect credentials";
+        }
+    }
+
     @ShellMethod(value = "Sign in as administrator", key = "sign in privileged")
     public String adminSignIn(final String adminUserName, final String adminPassword) {
         if ("admin".equals(adminUserName) && "admin".equals(adminPassword)) {
