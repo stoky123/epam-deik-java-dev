@@ -11,19 +11,19 @@ import javax.persistence.Id;
 @Getter
 @EqualsAndHashCode
 @Entity
-public class Movie {
+public class Room {
 
     @Id
     private String name;
 
     @Column(nullable = false)
-    private String genre;
+    private int rows;
 
     @Column(nullable = false)
-    private int runTime;
+    private int columns;
 
     @Override
     public String toString() {
-        return name + '(' + genre + ", " + runTime + " minutes)";
+        return "Room " + name + " With " + rows * columns + " seats, " + rows + " rows and " + columns + " columns)";
     }
 }
