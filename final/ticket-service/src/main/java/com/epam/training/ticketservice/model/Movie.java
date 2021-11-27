@@ -16,10 +16,6 @@ import javax.persistence.Id;
 public class Movie {
 
     @Id
-    @GeneratedValue
-    private Long id;
-
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
