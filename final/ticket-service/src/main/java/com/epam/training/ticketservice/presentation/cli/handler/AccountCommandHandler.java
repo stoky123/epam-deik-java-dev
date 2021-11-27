@@ -1,10 +1,23 @@
 package com.epam.training.ticketservice.presentation.cli.handler;
 
+import com.epam.training.ticketservice.service.AccountService;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 @ShellComponent
 public class AccountCommandHandler {
+
+    private final AccountService accountService;
+
+    public AccountCommandHandler(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    @ShellMethod(value = "Sign up", key = "sign up")
+    public String signUp(final String userName, final String password) {
+        this.accountService.createUser(userName, password);
+        return "Successfully signed up as " + userName;
+    }
 
     @ShellMethod(value = "Sign in", key = "sign in")
     public String signIn(final String adminUserName, final String adminPassword) {
@@ -17,8 +30,8 @@ public class AccountCommandHandler {
     }
 
     @ShellMethod(value = "Sign in as administrator", key = "sign in privileged")
-    public String adminSignIn(final String adminUserName, final String adminPassword) {
-        if ("admin".equals(adminUserName) && "admin".equals(adminPassword)) {
+    public String adminSignIn(final String userName, final String password) {
+        if ("admin".equals(userName) && "admin".equals(password)) {
             return "Signed in as administrator.";
         }
         else {
