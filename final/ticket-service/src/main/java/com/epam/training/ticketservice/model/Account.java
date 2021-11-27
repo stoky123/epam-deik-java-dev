@@ -12,14 +12,15 @@ import javax.persistence.Id;
 @ToString
 @EqualsAndHashCode
 @Entity
-public class Movie {
+public class Account {
 
     @Id
-    private String name;
+    private String username;
 
     @Column(nullable = false)
-    private String genre;
+    private String password;
 
-    @Column(nullable = false)
-    private int runTime;
+    @Column
+    private Boolean admin = false;
+
 }
