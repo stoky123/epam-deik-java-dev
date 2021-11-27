@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 @AllArgsConstructor
@@ -11,7 +12,7 @@ import java.text.SimpleDateFormat;
 @Getter
 @EqualsAndHashCode
 @Entity
-public class Screening {
+public class Screening implements Serializable {
 
     @Id
     private String movieName;

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableJpaRepositories("com.epam.training.ticketservice.repository")
-@EntityScan("com.epam.training.webshop.model")
+@EntityScan("com.epam.training.ticketservice.model")
 @EnableTransactionManagement
 public class JpaConfig {
 }
