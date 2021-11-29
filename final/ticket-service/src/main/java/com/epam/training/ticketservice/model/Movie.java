@@ -24,6 +24,6 @@ public class Movie {
 
     @Override
     public String toString() {
-        return name + '(' + genre + ", " + runTime + " minutes)";
+        return name + " (" + genre + ", " + runTime + " minutes)";
     }
 }

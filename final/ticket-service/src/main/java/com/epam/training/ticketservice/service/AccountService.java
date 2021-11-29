@@ -3,6 +3,7 @@ package com.epam.training.ticketservice.service;
 import com.epam.training.ticketservice.model.Account;
 import com.epam.training.ticketservice.repository.AccountRepository;
 import com.epam.training.ticketservice.service.exception.IncorrectCredentialsException;
+import com.epam.training.ticketservice.service.exception.NoUserFoundException;
 import com.epam.training.ticketservice.service.exception.UserNameAlreadyTakenException;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,14 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+    public boolean isSignedIn() {
+        return !signedInAccount.isEmpty();
+    }
+
+    public boolean isAdmin() {
+        return signedInAccount.get().getAdmin();
+    }
+
     public void createUser(String userName, String password) throws UserNameAlreadyTakenException {
         if(this.accountRepository.findById(userName).isPresent()) {
             throw new UserNameAlreadyTakenException();
@@ -28,24 +37,29 @@ public class AccountService {
         this.accountRepository.save(new Account(userName, password, false));
     }
 
-    public void signIn(String userName, String password) throws IncorrectCredentialsException {
-        if (this.accountRepository.findById(userName).get().getUsername().equals(userName)
-            && this.accountRepository.findById(userName).get().getPassword().equals(password)
-            && this.signedInAccount.isEmpty()) {
-            this.signedInAccount = this.accountRepository.findById(userName);
+    public void signIn(String userName, String password) throws IncorrectCredentialsException, NoUserFoundException {
+        Optional<Account> signInAccount = this.accountRepository.findById(userName);
+        if (signInAccount.isPresent()) {
+            if (signInAccount.get().getUsername().equals(userName) && signInAccount.get().getPassword().equals(password)) {
+                signedInAccount = signInAccount;
+            }
+            else {
+                throw new IncorrectCredentialsException();
+            }
         }
         else {
-            throw new IncorrectCredentialsException();
+            throw new NoUserFoundException();
         }
     }
 
     public void signOut() {
-        if (signedInAccount.isEmpty()) {
-            this.signedInAccount = Optional.empty();
-        }
-        else {
-            this.signedInAccount = Optional.empty();
-        }
+        this.signedInAccount = Optional.empty();
     }
 
+    public String describeAccount() {
+        if (this.isAdmin()) {
+            return "Signed in with privileged account " + this.signedInAccount.get().getUsername();
+        }
+        return "Signed in with account " + this.signedInAccount.get().getUsername();
+    }
 }
