@@ -7,8 +7,6 @@ import com.epam.training.ticketservice.service.exception.MovieExistsException;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Getter
 @Service
 public class MovieService {
@@ -42,10 +40,6 @@ public class MovieService {
         else {
             throw new MovieDoesNotExistsException();
         }
-    }
-
-    public List<Movie> getMovies() {
-        return this.movieRepository.findAll();
     }
 
     public String listMovies() {

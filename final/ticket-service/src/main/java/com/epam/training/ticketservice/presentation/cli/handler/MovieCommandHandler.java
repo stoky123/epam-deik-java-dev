@@ -1,22 +1,18 @@
 package com.epam.training.ticketservice.presentation.cli.handler;
 
-import com.epam.training.ticketservice.model.Movie;
+import com.epam.training.ticketservice.service.AbstractCommandHandler;
 import com.epam.training.ticketservice.service.AccountService;
 import com.epam.training.ticketservice.service.MovieService;
 import com.epam.training.ticketservice.service.exception.MovieDoesNotExistsException;
 import com.epam.training.ticketservice.service.exception.MovieExistsException;
-import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
-import java.util.List;
-
 @ShellComponent
-public class MovieCommandHandler {
+public class MovieCommandHandler extends AbstractCommandHandler {
 
     private final MovieService movieService;
-    private final AccountService accountService;
 
     public MovieCommandHandler(MovieService movieService, AccountService accountService) {
         this.movieService = movieService;
@@ -24,7 +20,7 @@ public class MovieCommandHandler {
     }
 
     @ShellMethod(value = "Creates a movie", key = "create movie")
-    //@ShellMethodAvailability("isAdmin")
+    @ShellMethodAvailability("isAdmin")
     public String createMovie(final String movieName, final String genre, final int runTime) {
         try {
             this.movieService.createMovie(movieName, genre, runTime);
@@ -36,6 +32,7 @@ public class MovieCommandHandler {
     }
 
     @ShellMethod(value = "Updates an already existing movie", key = "update movie")
+    @ShellMethodAvailability("isAdmin")
     public String updateMovie(final String movieName, final String genre, final int runTime) {
         try {
             this.movieService.updateMovie(movieName, genre, runTime);
@@ -46,6 +43,7 @@ public class MovieCommandHandler {
     }
 
     @ShellMethod(value = "Deletes a movie", key = "delete movie")
+    @ShellMethodAvailability("isAdmin")
     public String deleteMovie(final String movieName) {
         try {
             this.movieService.deleteMovie(movieName);
@@ -60,8 +58,4 @@ public class MovieCommandHandler {
     public String listMovies() {
         return this.movieService.listMovies();
     }
-
-    /*public Availability isAdmin() {
-        return this.accountService.isAdmin() ? Availability.available() : Availability.unavailable("you are already signed in.");
-    }*/
 }

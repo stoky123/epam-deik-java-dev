@@ -1,18 +1,16 @@
 package com.epam.training.ticketservice.presentation.cli.handler;
 
 import com.epam.training.ticketservice.service.AccountService;
+import com.epam.training.ticketservice.service.AbstractCommandHandler;
 import com.epam.training.ticketservice.service.exception.IncorrectCredentialsException;
 import com.epam.training.ticketservice.service.exception.NoUserFoundException;
 import com.epam.training.ticketservice.service.exception.UserNameAlreadyTakenException;
-import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 @ShellComponent
-public class AccountCommandHandler {
-
-    private final AccountService accountService;
+public class AccountCommandHandler extends AbstractCommandHandler {
 
     public AccountCommandHandler(AccountService accountService) {
         this.accountService = accountService;
@@ -67,13 +65,5 @@ public class AccountCommandHandler {
     @ShellMethodAvailability("signedIn")
     public String describeAccount() {
         return this.accountService.describeAccount();
-    }
-
-    public Availability signedIn() {
-        return this.accountService.isSignedIn() ? Availability.available() : Availability.unavailable("you are not signed in.");
-    }
-
-    public Availability notSignedIn() {
-        return !this.accountService.isSignedIn() ? Availability.available() : Availability.unavailable("you are already signed in.");
     }
 }
