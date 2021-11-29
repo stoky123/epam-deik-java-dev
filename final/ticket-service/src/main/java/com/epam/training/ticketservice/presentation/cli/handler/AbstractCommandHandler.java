@@ -1,5 +1,6 @@
-package com.epam.training.ticketservice.service;
+package com.epam.training.ticketservice.presentation.cli.handler;
 
+import com.epam.training.ticketservice.service.AccountService;
 import org.springframework.shell.Availability;
 
 public abstract class AbstractCommandHandler {

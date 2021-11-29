@@ -1,7 +1,6 @@
 package com.epam.training.ticketservice.presentation.cli.handler;
 
 import com.epam.training.ticketservice.service.AccountService;
-import com.epam.training.ticketservice.service.AbstractCommandHandler;
 import com.epam.training.ticketservice.service.exception.IncorrectCredentialsException;
 import com.epam.training.ticketservice.service.exception.NoUserFoundException;
 import com.epam.training.ticketservice.service.exception.UserNameAlreadyTakenException;

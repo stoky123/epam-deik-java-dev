@@ -35,7 +35,7 @@ public class MovieService {
 
     public void deleteMovie(String movieName) {
         if (this.movieRepository.findById(movieName).isPresent()) {
-            this.movieRepository.delete(this.movieRepository.findById(movieName).get());
+            this.movieRepository.deleteById(movieName);
         }
         else {
             throw new MovieDoesNotExistsException();
