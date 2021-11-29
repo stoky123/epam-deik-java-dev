@@ -30,7 +30,7 @@ public class AccountCommandHandler {
 
     @ShellMethod(value = "Sign in", key = "sign in")
     public String signIn(final String userName, final String password) {
-        if (this.accountService.getSignedInAccount().equals(Optional.empty())) {
+        if (this.accountService.getSignedInAccount().isEmpty()) {
             try {
                 this.accountService.signIn(userName, password);
                 return "Successfully signed in as " + userName;
@@ -46,7 +46,7 @@ public class AccountCommandHandler {
 
     @ShellMethod(value = "Sign in as administrator", key = "sign in privileged")
     public String adminSignIn(final String userName, final String password) {
-        if (this.accountService.getSignedInAccount().equals(Optional.empty())) {
+        if (this.accountService.getSignedInAccount().isEmpty()) {
             if ("admin".equals(userName) && "admin".equals(password)) {
                 this.accountService.signIn("admin", "admin");
                 return "Signed in as administrator.";
@@ -62,7 +62,7 @@ public class AccountCommandHandler {
 
     @ShellMethod(value = "Sign out", key = "sign out")
     public String signOut() {
-        if (this.accountService.getSignedInAccount().equals(Optional.empty())) {
+        if (this.accountService.getSignedInAccount().isEmpty()) {
             return "You are not signed in.";
         }
         else {
@@ -73,7 +73,7 @@ public class AccountCommandHandler {
 
     @ShellMethod(value = "Describes the currently logged in account", key = "describe account")
     public String describeAccount() {
-        if (this.accountService.getSignedInAccount().equals(Optional.empty())) {
+        if (this.accountService.getSignedInAccount().isEmpty()) {
             return "You are not signed in.";
         }
         else if (this.accountService.getSignedInAccount().get().getAdmin()) {

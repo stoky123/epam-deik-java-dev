@@ -1,10 +1,17 @@
 package com.epam.training.ticketservice.presentation.cli.handler;
 
+import com.epam.training.ticketservice.service.MovieService;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 @ShellComponent
 public class MovieCommandHandler {
+
+    private final MovieService movieService;
+
+    public MovieCommandHandler(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @ShellMethod(value = "Creates a movie", key = "create movie")
     public String createMovie(final String movieName, final String genre, final int runTime) {
