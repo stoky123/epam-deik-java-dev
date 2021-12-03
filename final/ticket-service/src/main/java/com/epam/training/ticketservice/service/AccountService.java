@@ -4,6 +4,7 @@ import com.epam.training.ticketservice.model.Account;
 import com.epam.training.ticketservice.repository.AccountRepository;
 import com.epam.training.ticketservice.service.exception.IncorrectCredentialsException;
 import com.epam.training.ticketservice.service.exception.NoUserFoundException;
+import com.epam.training.ticketservice.service.exception.NotSignedInException;
 import com.epam.training.ticketservice.service.exception.UserNameAlreadyTakenException;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class AccountService {
     }
 
     public void createUser(String userName, String password) throws UserNameAlreadyTakenException {
-        if(this.accountRepository.findById(userName).isPresent()) {
+        if (this.accountRepository.findById(userName).isPresent()) {
             throw new UserNameAlreadyTakenException();
         }
 
@@ -40,26 +41,31 @@ public class AccountService {
     public void signIn(String userName, String password) throws IncorrectCredentialsException, NoUserFoundException {
         Optional<Account> signInAccount = this.accountRepository.findById(userName);
         if (signInAccount.isPresent()) {
-            if (signInAccount.get().getUsername().equals(userName) && signInAccount.get().getPassword().equals(password)) {
+            if (signInAccount.get().getUsername().equals(userName)
+                    && signInAccount.get().getPassword().equals(password)) {
                 signedInAccount = signInAccount;
-            }
-            else {
+            } else {
                 throw new IncorrectCredentialsException();
             }
-        }
-        else {
+        } else {
             throw new NoUserFoundException();
         }
     }
 
-    public void signOut() {
+    public void signOut() throws NotSignedInException {
+        if (this.signedInAccount.isEmpty()) {
+            throw new NotSignedInException();
+        }
         this.signedInAccount = Optional.empty();
     }
 
     public String describeAccount() {
-        if (this.isAdmin()) {
-            return "Signed in with privileged account " + this.signedInAccount.get().getUsername();
+        if (this.signedInAccount.isEmpty()) {
+            return "You are not signed in";
         }
-        return "Signed in with account " + this.signedInAccount.get().getUsername();
+        if (this.isAdmin()) {
+            return "Signed in with privileged account '" + this.signedInAccount.get().getUsername() + "'";
+        }
+        return "Signed in with account '" + this.signedInAccount.get().getUsername() + "'";
     }
 }

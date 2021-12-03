@@ -19,37 +19,34 @@ public class RoomCommandHandler extends AbstractCommandHandler {
     }
 
     @ShellMethod(value = "Creates a room", key = "create room")
-    @ShellMethodAvailability("signedIn")
+    @ShellMethodAvailability("isAdmin")
     public String createRoom(final String roomName, final int rows, final int columns) {
         try {
             this.roomService.createRoom(roomName, rows, columns);
             return "Room created.";
-        }
-        catch (RoomAlreadyExistsException e) {
+        } catch (RoomAlreadyExistsException e) {
             return "This room already exists";
         }
     }
 
     @ShellMethod(value = "Updates a room", key = "update room")
-    @ShellMethodAvailability("signedIn")
+    @ShellMethodAvailability("isAdmin")
     public String updateRoom(final String roomName, final int rows, final int columns) {
         try {
             this.roomService.updateRoom(roomName, rows, columns);
             return "Room updated.";
-        }
-        catch (RoomDoesNotExistsException e) {
+        } catch (RoomDoesNotExistsException e) {
             return "This room does not exist.";
         }
     }
 
     @ShellMethod(value = "Deletes a room", key = "delete room")
-    @ShellMethodAvailability("signedIn")
+    @ShellMethodAvailability("isAdmin")
     public String deleteRoom(final String roomName) {
         try {
             this.roomService.deleteRoom(roomName);
             return "Room deleted.";
-        }
-        catch (RoomDoesNotExistsException e) {
+        } catch (RoomDoesNotExistsException e) {
             return "This room does not exist.";
         }
     }

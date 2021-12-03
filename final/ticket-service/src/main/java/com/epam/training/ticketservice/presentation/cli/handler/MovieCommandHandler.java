@@ -4,6 +4,7 @@ import com.epam.training.ticketservice.service.AccountService;
 import com.epam.training.ticketservice.service.MovieService;
 import com.epam.training.ticketservice.service.exception.MovieDoesNotExistsException;
 import com.epam.training.ticketservice.service.exception.MovieExistsException;
+import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
@@ -24,8 +25,7 @@ public class MovieCommandHandler extends AbstractCommandHandler {
         try {
             this.movieService.createMovie(movieName, genre, runTime);
             return "Movie created.";
-        }
-        catch (MovieExistsException e) {
+        } catch (MovieExistsException e) {
             return "This movie already exists.";
         }
     }
@@ -47,8 +47,7 @@ public class MovieCommandHandler extends AbstractCommandHandler {
         try {
             this.movieService.deleteMovie(movieName);
             return "Movie deleted.";
-        }
-        catch (MovieDoesNotExistsException e) {
+        } catch (MovieDoesNotExistsException e) {
             return "This movie does not exits.";
         }
     }
@@ -57,4 +56,6 @@ public class MovieCommandHandler extends AbstractCommandHandler {
     public String listMovies() {
         return this.movieService.listMovies();
     }
+
+
 }

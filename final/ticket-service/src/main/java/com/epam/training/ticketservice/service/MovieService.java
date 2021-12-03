@@ -17,7 +17,7 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public void createMovie(String movieName, String genre, int runTime) throws MovieExistsException{
+    public void createMovie(String movieName, String genre, int runTime) throws MovieExistsException {
         if (this.movieRepository.findById(movieName).isPresent()) {
             throw new MovieExistsException();
         }
@@ -27,8 +27,7 @@ public class MovieService {
     public void updateMovie(String movieName, String genre, int runTime) {
         if (this.movieRepository.findById(movieName).isPresent()) {
             this.movieRepository.save(new Movie(movieName, genre, runTime));
-        }
-        else {
+        } else {
             throw new MovieDoesNotExistsException();
         }
     }
@@ -36,8 +35,7 @@ public class MovieService {
     public void deleteMovie(String movieName) {
         if (this.movieRepository.findById(movieName).isPresent()) {
             this.movieRepository.deleteById(movieName);
-        }
-        else {
+        } else {
             throw new MovieDoesNotExistsException();
         }
     }

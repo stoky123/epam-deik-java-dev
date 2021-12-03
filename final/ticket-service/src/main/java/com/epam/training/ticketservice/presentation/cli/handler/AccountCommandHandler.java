@@ -3,6 +3,7 @@ package com.epam.training.ticketservice.presentation.cli.handler;
 import com.epam.training.ticketservice.service.AccountService;
 import com.epam.training.ticketservice.service.exception.IncorrectCredentialsException;
 import com.epam.training.ticketservice.service.exception.NoUserFoundException;
+import com.epam.training.ticketservice.service.exception.NotSignedInException;
 import com.epam.training.ticketservice.service.exception.UserNameAlreadyTakenException;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -20,8 +21,7 @@ public class AccountCommandHandler extends AbstractCommandHandler {
         try {
             this.accountService.createUser(userName, password);
             return "Successfully signed up as " + userName;
-        }
-        catch (UserNameAlreadyTakenException e) {
+        } catch (UserNameAlreadyTakenException e) {
             return "Username is already taken.";
         }
     }
@@ -32,36 +32,36 @@ public class AccountCommandHandler extends AbstractCommandHandler {
         try {
             this.accountService.signIn(userName, password);
             return "Successfully signed in as " + userName;
-        }
-        catch (IncorrectCredentialsException e) {
+        } catch (IncorrectCredentialsException e) {
             return "Login failed due to incorrect credentials.";
-        }
-        catch (NoUserFoundException e) {
+        } catch (NoUserFoundException e) {
             return "No user found with the given username.";
         }
     }
 
     @ShellMethod(value = "Sign in as administrator", key = "sign in privileged")
     @ShellMethodAvailability("notSignedIn")
-    public String adminSignIn(final String userName, final String password) {
+    public String signInPrivileged(final String userName, final String password) {
         if ("admin".equals(userName) && "admin".equals(password)) {
             this.accountService.signIn("admin", "admin");
             return "Signed in as administrator.";
-        }
-        else {
+        } else {
             return "Login failed due to incorrect credentials";
         }
     }
 
     @ShellMethod(value = "Sign out", key = "sign out")
-    @ShellMethodAvailability("signedIn")
     public String signOut() {
-        this.accountService.signOut();
-        return "Successfully signed out.";
+        try {
+            this.accountService.signOut();
+            return "Successfully signed out.";
+        } catch (NotSignedInException e) {
+            return "You are not signed in";
+        }
+
     }
 
     @ShellMethod(value = "Describes the currently logged in account", key = "describe account")
-    @ShellMethodAvailability("signedIn")
     public String describeAccount() {
         return this.accountService.describeAccount();
     }

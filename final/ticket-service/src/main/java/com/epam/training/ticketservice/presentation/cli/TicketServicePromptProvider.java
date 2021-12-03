@@ -9,6 +9,6 @@ public class TicketServicePromptProvider implements PromptProvider {
 
     @Override
     public AttributedString getPrompt() {
-        return new AttributedString("TicketService> ");
+        return new AttributedString("Ticket service> ");
     }
 }

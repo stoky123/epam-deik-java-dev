@@ -1,6 +1,9 @@
 package com.epam.training.ticketservice.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +27,6 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room " + name + " With " + rows * columns + " seats, " + rows + " rows and " + columns + " columns";
+        return "Room " + name + " with " + rows * columns + " seats, " + rows + " rows and " + columns + " columns";
     }
 }
