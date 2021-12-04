@@ -159,7 +159,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.5.3</version>
                 <configuration>
-                    <mainClass>com.epam.training.webshop.presentation.cli.CliApplication</mainClass>
+                    <mainClass>com.epam.training.ticketservice.presentation.cli.Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>
