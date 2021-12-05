@@ -4,7 +4,6 @@ import com.epam.training.ticketservice.service.AccountService;
 import com.epam.training.ticketservice.service.MovieService;
 import com.epam.training.ticketservice.service.exception.MovieDoesNotExistsException;
 import com.epam.training.ticketservice.service.exception.MovieExistsException;
-import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;

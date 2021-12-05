@@ -4,7 +4,6 @@ import com.epam.training.ticketservice.model.Movie;
 import com.epam.training.ticketservice.repository.MovieRepository;
 import com.epam.training.ticketservice.service.exception.MovieDoesNotExistsException;
 import com.epam.training.ticketservice.service.exception.MovieExistsException;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 @Service

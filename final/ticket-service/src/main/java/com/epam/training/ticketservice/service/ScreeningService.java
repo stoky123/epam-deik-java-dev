@@ -9,7 +9,6 @@ import com.epam.training.ticketservice.service.exception.MovieDoesNotExistsExcep
 import com.epam.training.ticketservice.service.exception.OverLappingScreeningException;
 import com.epam.training.ticketservice.service.exception.RoomDoesNotExistsException;
 import com.epam.training.ticketservice.service.exception.ScreeningNotFoundException;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

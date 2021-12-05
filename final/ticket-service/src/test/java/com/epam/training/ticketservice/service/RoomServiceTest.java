@@ -1,6 +1,5 @@
 package com.epam.training.ticketservice.service;
 
-import com.epam.training.ticketservice.model.Movie;
 import com.epam.training.ticketservice.model.Room;
 import com.epam.training.ticketservice.repository.RoomRepository;
 import com.epam.training.ticketservice.service.exception.RoomAlreadyExistsException;

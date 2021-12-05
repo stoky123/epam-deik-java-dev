@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -151,35 +150,6 @@ class ScreeningServiceTest {
                 )
         );
     }
-
-    /*@Test
-    void testDeleteScreeningShouldDeleteScreeningWhenGivenScreeningExists() {
-        // Given in setup
-        BDDMockito.given(screeningRepository.findByMovieAndRoomAndStartingDate(
-                        existingMovie,
-                        existingRoom,
-                        LocalDateTime.parse(
-                                "2000-01-01 16:40",
-                                formatter
-                        )
-                ))
-                .willReturn(Optional.of(existingScreening));
-        BDDMockito.given(movieRepository.getById("existingMovie")).willReturn(existingMovie);
-        BDDMockito.given(roomRepository.getById("existingRoom")).willReturn(existingRoom);
-        // When
-        underTest.deleteScreening("existingMovie", "existingRoom", "2000-01-01 16:40");
-        // Then
-        Mockito.verify(screeningRepository).findByMovieAndRoomAndStartingDate(
-                existingMovie,
-                existingRoom,
-                LocalDateTime.parse(
-                        "2000-01-01 16:40",
-                        formatter
-                )
-        );
-        Mockito.verify(screeningRepository).deleteById(Mockito.any(Long.class));
-        Mockito.verifyNoMoreInteractions(screeningRepository);
-    }*/
 
     @Test
     void testDeleteScreeningShouldThrowScreeningNotFoundExceptionWhenScreeningDoesNotExist() {

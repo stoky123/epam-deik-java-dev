@@ -34,14 +34,6 @@ public class AccountService {
         return signedInAccount.get().getAdmin();
     }
 
-    /*public void createUser(String userName, String password) throws UserNameAlreadyTakenException {
-        if (this.accountRepository.findById(userName).isPresent()) {
-            throw new UserNameAlreadyTakenException();
-        }
-
-        this.accountRepository.save(new Account(userName, password, false));
-    }*/
-
     public void signInPrivileged(String userName, String password)
             throws IncorrectCredentialsException, NoUserFoundException {
         Optional<Account> signInAccount = this.accountRepository.findById(userName);

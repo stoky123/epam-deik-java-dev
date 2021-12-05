@@ -4,7 +4,6 @@ import com.epam.training.ticketservice.model.Room;
 import com.epam.training.ticketservice.repository.RoomRepository;
 import com.epam.training.ticketservice.service.exception.RoomAlreadyExistsException;
 import com.epam.training.ticketservice.service.exception.RoomDoesNotExistsException;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 @Service
