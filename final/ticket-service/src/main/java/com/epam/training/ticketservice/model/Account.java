@@ -13,7 +13,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
 @EqualsAndHashCode
 @Entity
 public class Account {

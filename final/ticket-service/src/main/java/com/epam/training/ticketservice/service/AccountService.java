@@ -5,18 +5,19 @@ import com.epam.training.ticketservice.repository.AccountRepository;
 import com.epam.training.ticketservice.service.exception.IncorrectCredentialsException;
 import com.epam.training.ticketservice.service.exception.NoUserFoundException;
 import com.epam.training.ticketservice.service.exception.NotSignedInException;
-import com.epam.training.ticketservice.service.exception.UserNameAlreadyTakenException;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Getter
 @Service
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private Optional<Account> signedInAccount = Optional.empty();
+
+    public Optional<Account> getSignedInAccount() {
+        return this.signedInAccount;
+    }
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
@@ -27,18 +28,22 @@ public class AccountService {
     }
 
     public boolean isAdmin() {
+        if (signedInAccount.isEmpty()) {
+            return false;
+        }
         return signedInAccount.get().getAdmin();
     }
 
-    public void createUser(String userName, String password) throws UserNameAlreadyTakenException {
+    /*public void createUser(String userName, String password) throws UserNameAlreadyTakenException {
         if (this.accountRepository.findById(userName).isPresent()) {
             throw new UserNameAlreadyTakenException();
         }
 
         this.accountRepository.save(new Account(userName, password, false));
-    }
+    }*/
 
-    public void signIn(String userName, String password) throws IncorrectCredentialsException, NoUserFoundException {
+    public void signInPrivileged(String userName, String password)
+            throws IncorrectCredentialsException, NoUserFoundException {
         Optional<Account> signInAccount = this.accountRepository.findById(userName);
         if (signInAccount.isPresent()) {
             if (signInAccount.get().getUsername().equals(userName)

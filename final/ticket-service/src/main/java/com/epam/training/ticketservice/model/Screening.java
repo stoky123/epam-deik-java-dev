@@ -1,7 +1,5 @@
 package com.epam.training.ticketservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,10 +12,8 @@ import javax.persistence.JoinColumn;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
 public class Screening {
 

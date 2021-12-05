@@ -7,7 +7,6 @@ import com.epam.training.ticketservice.service.exception.MovieExistsException;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
-@Getter
 @Service
 public class MovieService {
 

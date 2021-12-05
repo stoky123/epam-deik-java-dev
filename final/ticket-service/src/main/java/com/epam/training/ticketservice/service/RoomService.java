@@ -2,13 +2,11 @@ package com.epam.training.ticketservice.service;
 
 import com.epam.training.ticketservice.model.Room;
 import com.epam.training.ticketservice.repository.RoomRepository;
-import com.epam.training.ticketservice.service.exception.MovieExistsException;
 import com.epam.training.ticketservice.service.exception.RoomAlreadyExistsException;
 import com.epam.training.ticketservice.service.exception.RoomDoesNotExistsException;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
-@Getter
 @Service
 public class RoomService {
 
@@ -28,8 +26,9 @@ public class RoomService {
     public void updateRoom(String roomName, int rows, int columns) throws RoomDoesNotExistsException {
         if (this.roomRepository.findById(roomName).isPresent()) {
             this.roomRepository.save(new Room(roomName, rows, columns));
+        } else {
+            throw new RoomDoesNotExistsException();
         }
-        throw new RoomDoesNotExistsException();
     }
 
     public void deleteRoom(String roomName) {

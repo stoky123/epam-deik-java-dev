@@ -11,13 +11,13 @@ import com.epam.training.ticketservice.service.exception.RoomDoesNotExistsExcept
 import com.epam.training.ticketservice.service.exception.ScreeningNotFoundException;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-@Getter
 @Service
 public class ScreeningService {
     private final ScreeningRepository screeningRepository;
@@ -34,6 +34,7 @@ public class ScreeningService {
         this.roomRepository = roomRepository;
     }
 
+    @Transactional
     public void createScreening(String movieName, String roomName, String date) {
         if (!this.movieRepository.findById(movieName).isPresent()) {
             throw new MovieDoesNotExistsException();
@@ -43,24 +44,26 @@ public class ScreeningService {
         }
         LocalDateTime startingDate = LocalDateTime.parse(date, this.formatter);
         LocalDateTime endingDate = startingDate
-                .plusMinutes(this.movieRepository.findById(movieName).get().getRunTime());
+                .plusMinutes(this.movieRepository.getById(movieName).getRunTime());
         List<Screening> overlappingScreenings = this.screeningRepository.findAll();
         for (Screening screening : overlappingScreenings) {
-            LocalDateTime existingStartingDate = screening.getStartingDate();
-            LocalDateTime existingEndingDate = existingStartingDate.plusMinutes(screening.getMovie().getRunTime());
-            if ((startingDate.isBefore(existingStartingDate) && endingDate.isAfter(existingStartingDate))
-                    || (existingStartingDate.isBefore(startingDate) && existingEndingDate.isAfter(startingDate))
-                    || startingDate.isEqual(existingStartingDate)
-                    || startingDate.isEqual(existingEndingDate)
-                    || endingDate.isEqual(existingStartingDate)
-                    || endingDate.isEqual(existingEndingDate)) {
-                throw new OverLappingScreeningException();
-            }
-            if ((existingEndingDate.isBefore(startingDate)
-                    && existingEndingDate.plusMinutes(10).isAfter(startingDate))
-                    || (endingDate.isBefore(existingStartingDate)
-                    && endingDate.plusMinutes(10).isAfter(existingStartingDate))) {
-                throw new BreakPeriodException();
+            if (screening.getRoom().getName().equals(roomName)) {
+                LocalDateTime existingStartingDate = screening.getStartingDate();
+                LocalDateTime existingEndingDate = existingStartingDate.plusMinutes(screening.getMovie().getRunTime());
+                if ((startingDate.isBefore(existingStartingDate) && endingDate.isAfter(existingStartingDate))
+                        || (existingStartingDate.isBefore(startingDate) && existingEndingDate.isAfter(startingDate))
+                        || startingDate.isEqual(existingStartingDate)
+                        || startingDate.isEqual(existingEndingDate)
+                        || endingDate.isEqual(existingStartingDate)
+                        || endingDate.isEqual(existingEndingDate)) {
+                    throw new OverLappingScreeningException();
+                }
+                if ((existingEndingDate.isBefore(startingDate)
+                        && existingEndingDate.plusMinutes(10).isAfter(startingDate))
+                        || (endingDate.isBefore(existingStartingDate)
+                        && endingDate.plusMinutes(10).isAfter(existingStartingDate))) {
+                    throw new BreakPeriodException();
+                }
             }
         }
 
